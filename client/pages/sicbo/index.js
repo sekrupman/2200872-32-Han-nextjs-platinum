@@ -21,11 +21,10 @@ export default function Sicbo() {
     // ensure user has auth to play the game
     let userId = 0
     useEffect(() => {
-        
         if (!localStorage.getItem('tokenId')) {
             window.location.replace('/login');
         } else {
-            userId = localStorage.getItem('tokenId')
+            userId += Number(localStorage.getItem('tokenId'))
         }
     }, [])
 
