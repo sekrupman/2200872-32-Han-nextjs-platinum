@@ -3,15 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "cross-env next dev",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "bootstrap": "^5.3.1",
+    "cross-env": "^7.0.3",
     "next": "^11.1.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-redux": "^8.1.2",
+    "reactstrap": "^9.2.0",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2"
   }
