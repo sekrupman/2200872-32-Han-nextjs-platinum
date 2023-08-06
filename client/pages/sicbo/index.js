@@ -19,12 +19,12 @@ import {InsertScoreApi} from '../../api/gameScoreApi';
 
 export default function Sicbo() {
     // ensure user has auth to play the game
-    let userId = 0
+    const [userId, setUserId] = useState(0)
     useEffect(() => {
         if (!localStorage.getItem('tokenId')) {
             window.location.replace('/login');
         } else {
-            userId += Number(localStorage.getItem('tokenId'))
+            setUserId(Number(localStorage.getItem('tokenId')))
         }
     }, [])
 
