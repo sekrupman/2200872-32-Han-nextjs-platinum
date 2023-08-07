@@ -1,0 +1,9 @@
+.navbarProfile {
+    background-color: #4E67EB;
+}
+
+.navProfile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
