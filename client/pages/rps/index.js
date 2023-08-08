@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
 
 // import api
-import { insertScoreApi } from "../../api/rpsApi"
+import { InsertScoreApi } from "../../api/gameScoreApi"
 
 //import css
 import styles from '../../styles/Rps.module.css'
 
+import { useSelector, useDispatch } from "react-redux";
+
+import { updateRound, updateScore } from "../../redux/action";
+
 function RockPaperScissorsPage() {
+    const reduxState = useSelector(state => state);
+    const dispatch = useDispatch();
     // const username = localStorage.getItem("tokenUsername");
     const username = 'aaron'
     const choices = ["rock", "paper", "scissors"];
     const [userChoice, setUserChoice] = useState(null);
     const [computerChoice, setComputerChoice] = useState(null);
     const [result, setResult] = useState('VS');
-    const [skor, setSkor] = useState(0);
-    const [ronde, setRonde] = useState(0);
     const [insertMessage, setInsertMessage] = useState("");
 
     const handleButtonDone = async () => {
         try {
-            const user_id = localStorage.getItem("tokenId");
-            await insertScoreApi(user_id, skor);
-            setInsertMessage(`Skor tersimpan di user ${username} dengan skor ${skor} dengan jumlah ronde ${ronde}`);
-            setRonde(0);
-            setSkor(0);
+            // const user_id = localStorage.getItem("tokenId");
+            const user_id = 19;
+            const game_url = "rps";
+            await InsertScoreApi(user_id, game_url, reduxState.reducer.round, reduxState.reducer.score);
+            setInsertMessage(`Skor tersimpan di user ${username} dengan skor ${reduxState.reducer.score} dengan jumlah ronde ${reduxState.reducer.round}`);
+            dispatch(updateRound(0))
+            dispatch(updateScore(0))
             setTimeout(() => {
                 setUserChoice(null);
                 setComputerChoice(null);
@@ -41,7 +47,8 @@ function RockPaperScissorsPage() {
             const randomIndex = Math.floor(Math.random() * choices.length);
             const randomChoice = choices[randomIndex];
             // Set user and computer choices
-            setRonde(ronde + 1);
+            console.log(reduxState.reducer);
+            dispatch(updateRound(reduxState.reducer.round + 1))
             setUserChoice(chosenChoice);
             setComputerChoice(randomChoice);
         } else {
@@ -67,7 +74,7 @@ function RockPaperScissorsPage() {
                 (userChoice === "scissors" && computerChoice === "paper")
             ) {
                 setResult("You win!");
-                setSkor(skor + 1);
+                dispatch(updateScore(reduxState.reducer.score + 1));
             } else {
                 setResult("Com wins!");
             }
@@ -105,14 +112,14 @@ function RockPaperScissorsPage() {
 
             </header>
             <div className={styles.rpsRondeDisplay}>
-                Ronde : {ronde}
+                Ronde : {reduxState.reducer.round}
             </div>
             <div className={styles.rpsScoreDisplay}>
-                Score : {skor}
+                Score : {reduxState.reducer.score}
             </div>
             <br />
-            <div className={`grid ${styles.grid}`}>
-                <div className={`row ${styles.row}`}>
+            <div className={styles.grid}>
+                <div className={styles.row}>
                     <div className={styles.col}>
                         <h2 className={styles.rpsName} >{username}</h2>
                     </div>

@@ -4,7 +4,7 @@ function insertScoreApi(user_id, game_id, total_ronde, skor) {
         user_id,
         game_id,
         total_ronde,
-        skor: skor,
+        skor,
     };
     fetch(`${process.env.REACT_APP_BE_URL}/rps/insert-score`, {
       method: "POST",

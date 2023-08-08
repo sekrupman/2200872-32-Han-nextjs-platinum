@@ -87,14 +87,10 @@ function GameListPage() {
 
     return (
         <div className={styles.gamelistBody}>
-            <Container className={`my-5 ${styles.gamelistContainer}'`}>
+            <Container className={styles.gamelistContainer}>
                 {gameslist.data.map(function (data) {
                     return (
-                        <Card
-                            style={{
-                                
-                            }} className={styles.gamelistCardClass}
-                        >
+                        <Card className={styles.gamelistCardClass}>
                             <img
                                 alt="Sample"
                                 src={data.game_image_url}
