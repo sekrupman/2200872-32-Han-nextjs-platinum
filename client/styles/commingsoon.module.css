@@ -1,0 +1,17 @@
+.comingsoon-card{
+    margin-left: 1.5rem;
+    margin-top: 20px;
+    background-color: #4E67EB;
+    padding-top: 1rem;
+    padding-left: 1.5rem;
+    padding-bottom: 1rem;
+    border-radius: 25px;
+  } 
+
+  .card-title{  /*Card-title */
+    color: white;
+  }
+  
+  .card-text{
+    color: white;
+  }
