@@ -27,6 +27,17 @@
     background-color: black;   
 }
 
+/* navbar */
+.navbarProfile {
+    background-color: #4E67EB;
+}
+  
+.navProfile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .styleAvatar {
     height: 100px;
     width: 100px;
@@ -34,6 +45,11 @@
     margin-bottom: 20px;
     background: rgb(114, 113, 113);
     border-radius: 50%;
+}
+
+.changeAvatar {
+    display: flex;
+    align-items: flex-end;
 }
 
 .icons a {
@@ -47,6 +63,7 @@
 .btnProfile {
     box-shadow: 1px 1px 5px 2px rgba(213, 217, 218, 0.3);
     width: 150px;
+    height: 40px;
 }
 
 /* style modal */

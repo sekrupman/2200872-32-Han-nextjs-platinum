@@ -1,7 +1,7 @@
 import React from "react";
 
 // import css
-import style from '../../../styles/profile/Footer.module.css'
+import style from '../../styles/profile/Footer.module.css'
 
 function Footer() {
     return (

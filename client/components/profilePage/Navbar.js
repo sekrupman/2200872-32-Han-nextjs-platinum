@@ -1,15 +1,14 @@
-import React, {useState} from "react";
+import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 
 // import reactstrap
 import { Navbar,Container } from "reactstrap";
 
 // import css
-import style from "../../../styles/profile/Navbar.module.css"
+import style from "../../styles/profile/Profile.module.css"
 
 // import component
-import LogoutModal from "../../../pages/components/profilePage/logoutModal";
+import LogoutModal from "../../components/profilePage/logoutModal";
 
 function navbarProfile() {
     return (
