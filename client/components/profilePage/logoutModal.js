@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import Link from "next/link";
 
 // import reactstrap
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
-// import css
-import style from "../../../styles/profile/Profile.module.css"
 
 // import icons
 import { FaSignOutAlt } from "react-icons/fa";
@@ -32,7 +28,7 @@ function LogoutModal() {
                 id="logout-button" 
                 onClick={toggle}
             >
-                <FaSignOutAlt size={18} color="white"/>
+                <FaSignOutAlt size={18} color="black"/>
                 <p className="text-light">LOGOUT</p>
             </Button>
 

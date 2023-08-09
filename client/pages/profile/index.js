@@ -1,16 +1,19 @@
 import React, {useState, useEffect} from "react";
+import Link from "next/link";
+
+// import reactstrap
+import { Button } from "reactstrap";
 
 // import css
 import style from "../../styles/profile/Profile.module.css"
 
 // import components
-import ModalProfile from "../../pages/components/profilePage/Modal";
-import NavbarProfile from "../../pages/components/profilePage/Navbar";
-import Footer from "../../pages/components/profilePage/Footer";
+import ModalProfile from "../../components/profilePage/Modal";
+import NavbarProfile from "../../components/profilePage/Navbar";
+import Footer from "../../components/profilePage/Footer";
 
 // api
 import { userProfileApi } from "../../api/profilePageApi";
-
 
 // use dummy data in case the server is error
 const userDummy = [{ 
@@ -37,7 +40,7 @@ function ProfilePage() {
     // }, [])
 
     // const id = localStorage.getItem('tokenId')
-    const id = 5
+    const id = 4
 
     // state
     const [profileUser, setProfileUser] = useState({ data: userDummy[0] });
@@ -67,19 +70,26 @@ function ProfilePage() {
                             flexDirection: "column"
                         }}>
                             <h5 className="text-center">
-                                {/* {profileUser.data.username} */}
-                                Nourafni_
+                                {profileUser.data.username}
                             </h5>
                             <h6
                                 className="text-secondary text-center"
                                 style={{ marginBottom: "100px" }}
                             >
-                                {/* {profileUser.data.email} */}
-                                nourafni@example.com
+                                {profileUser.data.email}
                             </h6>
-                            <ModalProfile 
-                                profileUser={profileUser}
-                            />
+                            <div className="d-flex">
+                                <ModalProfile 
+                                    profileUser={profileUser}
+                                />
+                                <Link href="/profile/history-game">
+                                    <Button style={{backgroundColor:"#4E67EB"}} 
+                                        className={`ms-3 ${style.btnProfile}`}
+                                    >
+                                        History Game
+                                    </Button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState,useEffect} from "react";
 import Link from "next/link";
 
 // import reactstrap
@@ -9,16 +9,17 @@ import {
     ModalBody, 
     ModalFooter,
     Input,
-    Label
+    Label,
+    Spinner
 } from "reactstrap";
 
 // import css
-import style from "../../../styles/profile/Profile.module.css"
+import style from "../../styles/profile/Profile.module.css"
 
-// import { TbCameraPlus } from "react-icons/tb";
+import { TbCameraPlus } from "react-icons/tb";
 
 // import api
-import { upsertProfileApi } from "../../../api/profilePageApi";
+import { upsertProfileApi } from "../../api/profilePageApi";
 
 function ModalProfile(profileUser) {
     const oldData = profileUser.profileUser.data;
@@ -60,7 +61,7 @@ function ModalProfile(profileUser) {
 
     return (
         <div>
-            <Button block style={{backgroundColor:"#4E67EB"}} 
+            <Button style={{backgroundColor:"#4E67EB"}} 
                 className={`mb-3 ${style.btnProfile}`}
                 onClick={toggle}
             >
@@ -77,11 +78,12 @@ function ModalProfile(profileUser) {
                     className={style.styleModal}
                 >
                     <div className="d-flex justify-content-center">
-                        <a href="/avatar">
-                            <img alt="" src={oldData.avatar} className={style.styleAvatar} />
-                            <h6 className="mb-4" >Change Avatar</h6>
-
-                        </a>  
+                        <img src={oldData.avatar} className={style.styleAvatar} />
+                        <Link href="/profile/avatar">
+                            <p className={style.changeAvatar}>
+                                <TbCameraPlus size={26}/>
+                            </p> 
+                        </Link>
                     </div>  
                     <div className="d-flex justify-content-between">
                         <div>
@@ -161,8 +163,7 @@ function ModalProfile(profileUser) {
                     </div>
                 </ModalBody>
                 <ModalFooter className={style.styleModal}>
-                <Button 
-                    // style={{backgroundColor:"#400584"}}  
+                <Button  
                     style={{backgroundColor: "black"}}  
                     onClick={upsertData}
                 >
