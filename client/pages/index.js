@@ -1,12 +1,12 @@
 import React from "react";
 
 //import component
-import Footer from "../pages/components/profilePage/Footer";
-import Navbar from "../pages/components/Navbar";
-import CarouselComponent from '../pages/components/LandingPage/carrousel'
-import PopularGames from "./components/LandingPage/popularGames";
-import LeaderBoard from "./components/LandingPage/leaderboard";
-import CommingSoon from "./components/CommingSoon";
+import Footer from "../components/profilePage/Footer";
+import Navbar from "../components/Navbar";
+import CarouselComponent from '../components/LandingPage/carrousel'
+import PopularGames from "../components/LandingPage/popularGames";
+import LeaderBoard from "../components/LandingPage/leaderboard";
+import CommingSoon from "../components/CommingSoon";
 
 //import styles
 import styles from '../styles/LandingPage/mainPage/mainpage.module.css'
