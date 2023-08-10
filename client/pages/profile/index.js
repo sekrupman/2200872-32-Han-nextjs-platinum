@@ -8,9 +8,9 @@ import { Button } from "reactstrap";
 import style from "../../styles/profile/Profile.module.css"
 
 // import components
-import ModalProfile from "../components/profilePage/Modal";
-import NavbarProfile from "../components/profilePage/Navbar";
-import Footer from "../components/profilePage/Footer";
+import ModalProfile from "../../components/profilePage/Modal";
+import NavbarProfile from "../../components/profilePage/Navbar";
+import Footer from "../../components/profilePage/Footer";
 
 // api
 import { userProfileApi } from "../../api/profilePageApi";
