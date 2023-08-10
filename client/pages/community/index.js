@@ -1,10 +1,10 @@
 import React from "react";
 
 //import component
-import Table from "../components/Table";
-import CommingSoon from "../components/CommingSoon";
-import Footer from "../components/profilePage/Footer";
-import Navbar from "../components/Navbar";
+import Table from "../../components/Table";
+import CommingSoon from "../../components/CommingSoon";
+import Footer from "../../components/profilePage/Footer";
+import Navbar from "../../components/Navbar";
 
 //import css
 import styles from '../../styles/LandingPage/community/community.module.css'
