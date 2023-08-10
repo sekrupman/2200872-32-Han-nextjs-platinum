@@ -8,7 +8,7 @@ import { Navbar } from "reactstrap";
 import style from "../../styles/profile/History.module.css"
 
 // import components
-import Footer from "../../components/profilePage/Footer";
+import Footer from "../components/profilePage/Footer";
 
 import { IoMdArrowRoundBack } from "react-icons/io";
 

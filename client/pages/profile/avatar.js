@@ -62,7 +62,7 @@ function UploadAvatar() {
                 <Label for="avatar" className="text-light mb-3">
                     <h1>Upload Avatar</h1>
                 </Label>
-                <img src={imageUrl} alt="" width={200} height={200}></img>
+                <img  alt="" width={200} height={200}></img>
                 <Input 
                     type="file" 
                     name="avatar"

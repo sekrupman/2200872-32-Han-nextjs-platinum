@@ -11,9 +11,9 @@
     width: 100%;
     max-width: 1000px; 
     margin: auto;
-    position: relative;
+    position: fixed;
+    margin-right: 50%;
     bottom: 0;
     left: 50%;
-    margin-right: 50%;
     transform: translateX(-50%);
 }
