@@ -37,15 +37,23 @@ function ModalProfile(profileUser) {
         country: ""
      });
 
+    const [loading, setLoading] = useState(false);
 
     function handleChange(value) {
         setPayload({ ...payload, ...value })
         console.log("daya yg akan dikirim", payload)
     }
 
-    function upsertData() { 
+    const upsertData = async () => { 
         console.log("id", oldData.id)      
-        upsertProfileApi(oldData.id, payload).then( async (result) => {
+        return upsertProfileApi(oldData.id, payload)
+    }
+
+    async function handleRoll() {
+        try {
+            setLoading(true);
+            const result = await upsertData();
+            
             if (result !== undefined) {
                 if (result.status === "success") {
                     await localStorage.removeItem('tokenUsername');
@@ -56,8 +64,12 @@ function ModalProfile(profileUser) {
                     await window.location.replace('/profile')
                 }
             }
-        })
+        } catch (error) {
+            console.error(error);
+            setLoading(false);
+        }  
     }
+   
 
     return (
         <div>
@@ -165,11 +177,12 @@ function ModalProfile(profileUser) {
                 <ModalFooter className={style.styleModal}>
                 <Button  
                     style={{backgroundColor: "black"}}  
-                    onClick={upsertData}
+                    onClick={handleRoll}
+                    disabled={loading}
                 >
-                    Submit
+                    { loading ? <Spinner> </Spinner> : 'Submit' }
                 </Button>{' '}
-                <Button color="danger" onClick={toggle}>
+                <Button className="ms-4" color="danger" onClick={toggle}>
                     Cancel
                 </Button>
                 </ModalFooter>
