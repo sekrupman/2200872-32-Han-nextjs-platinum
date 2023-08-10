@@ -1,7 +1,7 @@
 import React from "react";
 
-import Footer from "../components/profilePage/Footer";
-import Navbar from "../components/Navbar";
+import Footer from "../../components/profilePage/Footer";
+import Navbar from "../../components/Navbar";
 
 import style from '../../styles/share.module.css'
 

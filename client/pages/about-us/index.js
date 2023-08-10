@@ -2,8 +2,8 @@ import React from "react";
 import { FaGithub } from 'react-icons/fa';
 
 //import component
-import Footer from "../components/profilePage/Footer";
-import Navbar from "../components/Navbar";
+import Footer from "../../components/profilePage/Footer";
+import Navbar from "../../components/Navbar";
 
 //import style
 import style from '../../styles/aboutus.module.css'
