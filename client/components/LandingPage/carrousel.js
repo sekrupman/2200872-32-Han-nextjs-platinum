@@ -61,7 +61,7 @@ function CarouselComponent(){
     try {  
         // check if token exist
         if(localStorage.getItem('tokenUsername')) {
-            window.location.href = game_url;
+            window.location.href = `/game/${game_url}`;
         } else {
             window.location.href = '/login';
         }
