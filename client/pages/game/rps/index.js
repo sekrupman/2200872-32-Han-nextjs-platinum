@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 // import api
-import { InsertScoreApi } from "../../api/gameScoreApi"
+import { InsertScoreApi } from "../../../api/gameScoreApi"
 
 //import css
-import styles from '../../styles/Rps.module.css'
+import styles from '../../../styles/Rps.module.css'
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { updateRound, updateScore } from "../../redux/action";
+import { updateRound, updateScore } from "../../../redux/action";
 
 function RockPaperScissorsPage() {
     const reduxState = useSelector(state => state);
@@ -20,6 +22,7 @@ function RockPaperScissorsPage() {
     const [computerChoice, setComputerChoice] = useState(null);
     const [result, setResult] = useState('VS');
     const [insertMessage, setInsertMessage] = useState("");
+    const [loading, setLoading] = useState(true)
 
     const handleButtonDone = async () => {
         try {
@@ -30,12 +33,14 @@ function RockPaperScissorsPage() {
             setInsertMessage(`Skor tersimpan di user ${username} dengan skor ${reduxState.reducer.score} dengan jumlah ronde ${reduxState.reducer.round}`);
             dispatch(updateRound(0))
             dispatch(updateScore(0))
+            setLoading(false)
             setTimeout(() => {
                 setUserChoice(null);
                 setComputerChoice(null);
                 setResult('VS');
                 setInsertMessage("");
-            }, 2000);
+                setLoading(true)
+            }, 3000);
         } catch (error) {
             console.error("Error:", error);
         }
@@ -106,7 +111,15 @@ function RockPaperScissorsPage() {
                 </div>
                 <div className={styles.rpsRightitem}>
                     <button onClick={() => handleButtonDone()} className={styles.doneButton}>
-                        <h3>Save your Progress!</h3>
+                        {loading === true ? 
+                        <span style={{ fontSize: '20px' }}>Save your Progress!</span> : 
+                        <Spin indicator={<LoadingOutlined
+                            style={{
+                                fontSize: 44,
+                                color: "white"
+                            }}
+                            spin
+                        />} />}
                     </button>
                 </div>
 
