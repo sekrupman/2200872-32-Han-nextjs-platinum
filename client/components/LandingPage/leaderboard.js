@@ -93,7 +93,8 @@ function LeaderBoard(){
                                         borderTopLeftRadius:"25px",
                                         textAlign: "center",
                                         width: '11rem',
-                                        height: '9rem'
+                                        height: '9rem',
+                                        borderRadius:'25px'
                                     }}
                                     alt=""
                                     src={leader.avatar}

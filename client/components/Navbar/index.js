@@ -23,26 +23,31 @@ function navbar(args){
   const [activeToken, setActiveToken] = useState({data: []})
    const [totalSkor, setTotalSkor] = useState(0);
 
-  useEffect(() => {
+   useEffect(() => {
     try {
-        const id = localStorage.getItem('tokenId')
-        const username = localStorage.getItem('tokenUsername')
-        const avatar = localStorage.getItem('tokenAvatar')
+        const id = localStorage.getItem('tokenId');
+        const username = localStorage.getItem('tokenUsername');
+        const avatar = localStorage.getItem('tokenAvatar');
 
         if (username) {
-            const newToken = {id, username, avatar}
-            setActiveToken({data: newToken})
+            const newToken = { id, username, avatar };
+            setActiveToken({ data: newToken });
 
             UserTotalScore(id).then(async (result) => {
-                if (result!== undefined) {
-                    setTotalSkor(Number(result.data))
+                if (result && result.data !== undefined) {
+                    setTotalSkor(Number(result.data));
+                    console.log(totalSkor);
+                } else {
+                    console.log("No valid score data in the response.");
                 }
-            })
-        } 
+            }).catch(error => {
+                console.log("Error fetching score data:", error);
+            });
+        }
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
-}, []); 
+}, []);
 
 async function handleSubmit() {
     await localStorage.removeItem('tokenId');
@@ -72,9 +77,7 @@ async function handleSubmit() {
     {activeToken.data.username ? 
   <Nav className='right-panel' dark expand="md">
     <NavItem>
-      <NavLink href ="/profile">
-        <img src={activeToken.data.avatar} alt="" width={50} height={50} style={{ cursor: 'pointer' }}/>
-      </NavLink>
+      <img src={activeToken.data.avatar} alt="" width={50} height={50} />
     </NavItem>
     <NavItem>
       <NavLink className="text-white">Hello, {activeToken.data.username}</NavLink>

@@ -85,80 +85,79 @@ const leaderList = [
 
     return (
       <div className={styles["table-container"]} style={{ backgroundColor: "#4E67EB", width: "800px" }}>
-        <div className={styles["table-title"]}>
-          <h1>SOBAT BERMAIN</h1>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Avatar</th>
-              <th>Username</th>
-              <th>Country</th>
-              <th>Score</th>
-              <th>Rank</th>
-            </tr>
-          </thead>
-          <tbody>
-    {isLoading ? (
-      
-      <>
-        {[...Array(10)].map((_, index) => (
-          <tr key={index}>
-            <td>
-              <Skeleton active paragraph={false}/>
-            </td>
-            <td>
-              <Skeleton active paragraph={false}/>
-            </td>
-            <td>
-              <Skeleton active paragraph={false}/>
-            </td>
-            <td>
-              <Skeleton active paragraph={false}/>
-            </td>
-            <td>
-              <Skeleton active paragraph={false}/>
-            </td>
+      <div className={styles["table-title"]}>
+        <h1>SOBAT BERMAIN</h1>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Avatar</th>
+            <th>Username</th>
+            <th>Country</th>
+            <th>Score</th>
+            <th>Rank</th>
           </tr>
-        ))}
-      </>
-            ) : (
-              // Render actual data
-              communityData.data.map((data) => (
-                <tr
-                  key={data.id}
-                  onClick={() => handleRowClick(data)}
-                  style={{ cursor: "pointer" }}
-                >
+        </thead>
+        <tbody>
+          {isLoading ? (
+            <>
+              {[...Array(10)].map((_, index) => (
+                <tr key={index}>
                   <td>
-                    <i className="far fa-gem mr-2 white-text" aria-hidden="true"></i>
-                    <img src={data.avatar} alt="" height={30} width={30}></img>
+                    <Skeleton active paragraph={false}/>
                   </td>
                   <td>
-                    <i className="far fa-gem mr-2 white-text" aria-hidden="true"></i>
-                    {data.username}
+                    <Skeleton active paragraph={false}/>
                   </td>
                   <td>
-                    <i className="fa fa-download mr-2 white-text" aria-hidden="true"></i>
-                    {data.country}
+                    <Skeleton active paragraph={false}/>
                   </td>
                   <td>
-                    <i className="far fa-gem mr-2 white-text" aria-hidden="true"></i>
-                    {data.score}
+                    <Skeleton active paragraph={false}/>
                   </td>
                   <td>
-                    <i className="fa fa-download mr-2 white-text" aria-hidden="true"></i>
-                    {data.rank}
+                    <Skeleton active paragraph={false}/>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-        {isModalOpen && clickedUserData && (
-          <ModalProfile onClose={() => setIsModalOpen(false)} userData={clickedUserData} />
-        )}
-      </div>
+              ))}
+            </>
+          ) : (
+            // Render actual data
+            communityData.data.map((data) => (
+              <tr 
+                key={data.id}
+                onClick={() => handleRowClick(data)}
+                style={{ cursor: "pointer" }}
+              >
+                <td>
+                  <i className="far fa-gem mr-2 white-text" aria-hidden="true"></i>
+                  <img src={data.avatar} alt="" height={30} width={30}></img>
+                </td>
+                <td>
+                  <i className="far fa-gem mr-2 white-text" aria-hidden="true"></i>
+                  {data.username}
+                </td>
+                <td>
+                  <i className="fa fa-download mr-2 white-text" aria-hidden="true"></i>
+                  {data.country}
+                </td>
+                <td>
+                  <i className="far fa-gem mr-2 white-text" aria-hidden="true"></i>
+                  {data.score}
+                </td>
+                <td>
+                  <i className="fa fa-download mr-2 white-text" aria-hidden="true"></i>
+                  {data.rank}
+                </td>
+              </tr>
+            ))
+          )}
+        </tbody>
+      </table>
+      {isModalOpen && clickedUserData && (
+        <ModalProfile onClose={() => setIsModalOpen(false)} userData={clickedUserData} />
+      )}
+    </div>    
     );
 }
 
