@@ -13,7 +13,7 @@
     position: relative;
     border-radius: 8px;
     background: #1c1c1c;
-    border: 5px solid black;
+    /* border: 5px solid black; */
 }
 
 .boxClass::before {
@@ -97,6 +97,24 @@
     background: #222;
     border-radius: 8px;
     flex-direction: column;
+}
+
+.alertClass {
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 65px;  
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    width: auto;
+    max-width: 900px;
+    font-weight: 1000;
+    font-size: 20px;
+    color: red;
+    justify-content: center;
 }
 
 .formClass .hClass {
@@ -212,5 +230,5 @@ input:focus ~ .divClass {
 .SubmitClass:hover {
     color: white;
     transition: 0.5s;
-    background: green;
+    background: blue;
 }

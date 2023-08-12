@@ -1,6 +1,10 @@
-import React, { useState } from "react";
-import { Label, Input, Button, Alert } from "reactstrap";
+import React, { useState } from "react"
+import { Label, Input, Button, Alert } from "reactstrap"
 import Link from 'next/link'
+
+// SPINNER
+import { LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
 
 // IMPORT CSS
 import styles from '../../styles/Register.module.css'
@@ -8,37 +12,61 @@ import styles from '../../styles/Register.module.css'
 // IMPORT API
 import { RegisterApi } from '../../api-lib/RegisterApi'
 
+const antIcon = (
+  <LoadingOutlined
+  style={{
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 20,
+    fontWeight: 70,
+    color: 'blue',
+  }}
+  spin/>)
+
 function RegisterPage() {
-    const [inputs, setInputs] = useState({});
-    // const [alertMessage, setAlertMessage] = useState('')
+    const [inputs, setInputs] = useState({})
+    const [showAlert, setShowAlert] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [showSpinner, setShowSpinner] = useState(false)
 
     const handleChange = (event) => {
-      const name = event.target.name;
-      const value = event.target.value;
-      setInputs(values => ({...values, [name]: value}))
+        const name = event.target.name
+        const value = event.target.value
+        setInputs(values => ({...values, [name]: value}))
     }
-  
-    const handleSubmit = (event) => {
+
+    const handleSubmit = async (event) => {
         try {
             event.preventDefault()
-            RegisterApi(inputs).then(async result => {
-                if (!result) {
-                    // setAlertMessage(data.message);
-                    // setHideAlert(false)
-                    await alert("INTERNAL SERVER ERROR !!!")
+            if (!inputs.email || !inputs.username || !inputs.password || !inputs.confirm_password) {
+                setShowAlert(true)
+                setAlertMessage('PLEASE ENTER YOUR DATA !')
+                return
+            }
+
+            setShowSpinner(true)
+
+            const result = await RegisterApi(inputs)
+
+            setShowSpinner(false)
+
+            if (!result) {
+                setAlertMessage('INTERNAL SERVER ERROR !!!')
+                setShowAlert(true)
+            } else {
+                if (result.status === "success") {
+                    await window.location.replace('/LoginPage')
                 } else {
-                    if (result.status === "success") {
-                        await window.location.replace('/LoginPage')
-                    } else {
-                        await alert(result.message)
-                    }
+                    setAlertMessage(result.message)
+                    setShowAlert(true)
                 }
-            })
+            }
         } catch (error) {
             console.log(error)
         }
     }
-    
+
     return (
         <div
             className={
@@ -57,17 +85,21 @@ function RegisterPage() {
             className={
                 `${styles.formClass}`
             }>
+
+        <Alert
+            className={
+                `${styles.alertClass}`
+            }
+            isOpen={showAlert}>
+            {alertMessage}
+        </Alert>
+
         <h2
             className={
                 `${styles.hClass}`
             }>
             REGISTER ACCOUNT
         </h2>
-        {/* <Alert 
-            color="danger" 
-            hidden={hideAlert}>
-            {alertMessage}
-        </Alert> */}
 
         <div
             className={
@@ -77,8 +109,8 @@ function RegisterPage() {
             type="email"
             name="email"
             id="email"
-            className={`
-                ${styles.inputClass}`
+            className={
+                `${styles.inputClass}`
             }
                 value={inputs.email || ""}
                 onChange={handleChange}
@@ -110,7 +142,7 @@ function RegisterPage() {
             }
                 value={inputs.username || ""}
                 onChange={handleChange}
-                required/>
+            required/>
         <Label
             for="username"
             className={
@@ -121,7 +153,7 @@ function RegisterPage() {
         <div
             className={
                 `${styles.divClass}`
-        }>
+            }>
         </div>
         </div>
 
@@ -133,12 +165,12 @@ function RegisterPage() {
             type="password"
             name="password"
             id="password"
-            className={`
-                ${styles.inputClass}`
+            className={
+                `${styles.inputClass}`
             }
             value={inputs.password || ""}
             onChange={handleChange}
-            required/>
+        required/>
         <Label
             for="password"
             className={
@@ -152,7 +184,7 @@ function RegisterPage() {
             }>
         </div>
         </div>
-        
+
         <div
             className={
                 `${styles.inputBoxClass}`
@@ -161,29 +193,29 @@ function RegisterPage() {
             type="password"
             name="confirm_password"
             id="confirm_password"
-            className={`
-                ${styles.inputClass}`
+            className={
+                `${styles.inputClass}`
             }
                 value={inputs.confirm_password || ""}
                 onChange={handleChange}
-                required/>
+            required/>
         <Label
             for="confirm_password"
-            className={`
-                ${styles.labelClass}`
+            className={
+                `${styles.labelClass}`
             }>
             CONFIRM PASSWORD
             </Label>
         <div
-            className={`
-                ${styles.divClass}`
+            className={
+                `${styles.divClass}`
             }>
         </div>
         </div>
 
-        <div 
-            className={`
-                ${styles.LinkClass}`
+        <div
+            className={
+                `${styles.LinkClass}`
             }>
         <Link
              href="/LoginPage">
@@ -191,24 +223,27 @@ function RegisterPage() {
         </Link>
         </div>
 
-        <div
-            className={`
-                ${styles.ButtonContainerClass}`
+        <div 
+            className={
+                `${styles.ButtonContainerClass}`
             }>
+
         {/* <Button
-            className={`
-                ${styles.ButtonClass}`
+            className={
+                `${styles.ButtonClass}`
             }
             type="button"
             onClick={handleSubmit} >
                 BACK
-        </Button> */}
+        </Button>  */}
+
         <Button
-            className={`
-                ${styles.SubmitClass}`
+            className={
+                `${styles.SubmitClass}`
             }
-            type="submit" onClick={handleSubmit}>
-                REGISTER
+                type="submit"
+                onClick={handleSubmit}>
+                {showSpinner ? <Spin indicator={antIcon} /> : 'REGISTER'}
         </Button>
         </div>
 
@@ -216,6 +251,6 @@ function RegisterPage() {
         </div>
         </div>
     )
-};
+}
 
-export default RegisterPage;
+export default RegisterPage

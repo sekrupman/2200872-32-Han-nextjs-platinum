@@ -1,46 +1,63 @@
-import React, { useState } from "react";
-import { Label, Input, Button, Alert } from "reactstrap";
-// import Link from 'next/link'
+import React, { useState } from "react"
+import { Label, Input, Button, Alert } from "reactstrap"
+
+// SPINNER
+import { LoadingOutlined } from '@ant-design/icons'
+import { Spin } from 'antd'
 
 // IMPORT CSS
 import styles from '../../styles/Reset.module.css'
 
-// IMPORT API
-// import { ResetApi } from '../../api-lib/ResetApi'
+const antIcon = (
+    <LoadingOutlined
+    style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: 19,
+        fontWeight: 900,
+        color: 'blue',
+    }}
+    spin/>)
 
-function ResetPasswordPagePage() {
-    // const [inputs, setInputs] = useState({});
-    // const [alertMessage, setAlertMessage] = useState('')
-
-    // const handleChange = (event) => {
-    //   const name = event.target.name;
-    //   const value = event.target.value;
-    //   setInputs(values => ({...values, [name]: value}))
-    // }
+function ResetPasswordPage() {
+    const [inputs, setInputs] = useState({})
+    const [showAlert, setShowAlert] = useState(false)
+    const [alertMessage, setAlertMessage] = useState('')
+    const [showResetSpinner, setShowResetSpinner] = useState(false)
+    const [showBackSpinner, setShowBackSpinner] = useState(false)
   
-    // const handleSubmit = (event) => {
-    //     try {
-    //         event.preventDefault()
-    //         ResetApi(inputs).then(async result => {
-    //             if (!result) {
-                    // setAlertMessage(data.message);
-                    // setHideAlert(false)
-    //                 await alert("Internal Server Error!")
-    //             } else {
-    //                 if (result.status === "success") {
-    //                     await localStorage.setItem('tokenId', result.data.id)
-    //                     await localStorage.setItem('tokenUsername', result.data.username)
-    //                     await localStorage.setItem('tokenAvatar', result.data.avatar)
-    //                     await window.location.replace('/')
-    //                 } else {
-    //                     await alert(result.message)
-    //                 }
-    //             }
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    const handleChange = (event) => {
+        const name = event.target.name
+        const value = event.target.value
+        setInputs(values => ({ ...values, [name]: value }))
+    }
+
+    const handleBackClick = () => {
+        setShowBackSpinner(true)
+        setTimeout(() => {
+        setShowBackSpinner(false)
+        window.location.href = '/LoginPage'
+        }, 2000)
+    }
+
+    const handleResetClick = async () => {
+        try {
+            if (!inputs.email) {
+            setShowAlert(true)
+            setAlertMessage('FAILED ❗ PLEASE ENTER YOUR EMAIL')
+            return
+        }
+        setShowResetSpinner(true)
+        setTimeout(() => {
+            setShowResetSpinner(false)
+            setShowAlert(true)
+            setAlertMessage('SUCCESS ✅ CHECK YOUR EMAIL TO RESET YOUR PASSWORD')
+        }, 2000)
+    } catch (error) {
+        console.log(error)
+        }
+    }
 
     return (
         <div
@@ -60,6 +77,14 @@ function ResetPasswordPagePage() {
             className={
                 `${styles.formClass}`
             }>
+
+        <Alert
+            className={
+                `${styles.alertClass} ${alertMessage.includes('SUCCESS') ? styles.greenAlert : styles.redAlert}`}
+            isOpen={showAlert}>
+            {alertMessage}
+        </Alert>
+
         <h2
             className={
                 `${styles.hClass}`
@@ -82,8 +107,8 @@ function ResetPasswordPagePage() {
             type="email"
             name="email"
             id="email"
-            className={`
-                ${styles.inputClass}`
+            className={
+                `${styles.inputClass}`
             }
                 value={inputs.email || ""}
                 onChange={handleChange}
@@ -103,31 +128,34 @@ function ResetPasswordPagePage() {
         </div>
 
         <div
-            className={`
-                ${styles.ButtonContainerClass}`
+            className={
+                `${styles.ButtonContainerClass}`
             }>
+
         <Button
-            className={`
-                ${styles.ButtonClass}`
+            className={
+                `${styles.ButtonClass}`
             }
             type="button"
-            href="/LoginPage">
-                BACK
+            onClick={handleBackClick}>
+            {showBackSpinner ? <Spin indicator={antIcon} /> : 'BACK'}
         </Button>
+
         <Button
-            className={`
-                ${styles.SubmitClass}`
+            className={
+                `${styles.SubmitClass}`
             }
+            onClick={handleResetClick}
             type="submit">
-            {/* onClick={handleSubmit} */}
-                RESET
+            {showResetSpinner ? <Spin indicator={antIcon} /> : 'RESET'}
         </Button>
+
         </div>
 
         </div>
         </div>
         </div>
     )
-};
+}
 
-export default ResetPasswordPagePage;
+export default ResetPasswordPage
