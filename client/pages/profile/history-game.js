@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 // import reactstrap
@@ -10,11 +10,40 @@ import style from "../../styles/profile/History.module.css"
 // import components
 import Footer from "../../components/profilePage/Footer";
 
+// api
+import { historyGameApi } from "../../api/profilePageApi";
+
 import { IoMdArrowRoundBack } from "react-icons/io";
 
+const userDummy = [
+    { 
+        id: 0,
+        gameName: "",
+        playtime: "",
+        totalRonde: 0,
+        userSkor: 0
+    }
+]
+
 function HistoryGame() {
+    // state
+    const [historyGame, setHistoryGame] = useState({ data: userDummy });
+
+    useEffect(() => {
+        try{
+            const id = localStorage.getItem('tokenId')
+            historyGameApi(id).then((result) => {
+                if (result !== undefined) {
+                    setHistoryGame({data: result.data})
+                }
+            })
+        } catch(error) {
+            console.error(error);
+        }
+    }, [])
+
     return (
-        <div style={{backgroundColor: "black", height: "100vh"}}>
+        <div style={{backgroundColor: "black"}}>
             <Navbar 
                 style={{backgroundColor: "#4E67EB"}}
                 className="mx-4"
@@ -33,21 +62,25 @@ function HistoryGame() {
                 <table>
                     <thead>
                         <tr>
-                            <th>Avatar</th>
-                            <th>Username</th>
-                            <th>Country</th>
+                            <th>Game Name</th>
+                            <th>Play Time</th>
+                            <th>Total Round</th>
                             <th>Score</th>
-                            <th>Rank</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td> 2</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                            <td>2</td>
-                        </tr>
+                    {historyGame.data.map((data) => {
+                        return (
+                            <tr
+                                key={data.id}
+                            >
+                                <td>{data.gameName}</td>
+                                <td>{data.playtime}</td>
+                                <td>{data.totalRonde}</td>
+                                <td>{data.userSkor}</td>
+                            </tr>
+                       )
+                    })}
                     </tbody>
                 </table>
             </div>
