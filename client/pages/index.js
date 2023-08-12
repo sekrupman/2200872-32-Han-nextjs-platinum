@@ -1,7 +1,9 @@
 import React from "react";
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 //import component
-import Footer from "../components/Footer";
+import Footer from "../components/profilePage/Footer";
 import Navbar from "../components/Navbar";
 import CarouselComponent from '../components/LandingPage/carrousel'
 import PopularGames from "../components/LandingPage/popularGames";
@@ -16,27 +18,28 @@ function Homepage(){
     return(
         <div>
             <div className={styles["background"]}>
-            <Navbar />
-            
-            <div className={styles["landing-header"]}>
-                <CarouselComponent />
-            </div>
-            <div className="d-flex">
-                <div className='d-flex flex-column'>
-                    <div>
-                        <PopularGames />
-                    </div>
-                    <div>
-                        <LeaderBoard />
-                    </div>
-                </div>
-                <div className={styles["comming-soon"]}>
-                    <CommingSoon />
-                </div>
-            </div>    
-            <Footer />
-            </div>
-        </div>
+                  <Navbar />
+
+              <div className={styles["landing-header"]}>
+                  <CarouselComponent />
+              </div>
+              <div className="d-flex">
+                  <div className='d-flex flex-column'>
+                      <div>
+                          <PopularGames />
+                      </div>
+                      <div>
+                          <LeaderBoard />
+                      </div>
+                  </div>
+                  <div className={styles["comming-soon"]}>
+                      <CommingSoon />
+                  </div>
+              </div>
+              <Footer />
+          </div>
+      </div>
+    
     )
 }
 
