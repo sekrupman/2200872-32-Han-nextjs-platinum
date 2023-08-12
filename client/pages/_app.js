@@ -1,10 +1,6 @@
 import React from 'react';
-<<<<<<< Updated upstream
-import '../styles/globals.css'
-=======
 
 import { useRouter } from 'next/router';
->>>>>>> Stashed changes
 
 import store from '../redux/store';
 import { Provider } from 'react-redux';
