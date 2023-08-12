@@ -13,7 +13,7 @@
     position: relative;
     border-radius: 8px;
     background: #1c1c1c;
-    border: 5px solid black;
+    /* border: 5px solid black; */
 }
 
 .boxClass::before {
@@ -99,6 +99,40 @@
     flex-direction: column;
 }
 
+.redAlert {
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 65px;  
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    width: auto;
+    max-width: 900px;
+    font-weight: 1000;
+    font-size: 20px;
+    color: red;
+}
+  
+.greenAlert {
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 65px;  
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    width: auto;
+    max-width: 900px;
+    font-weight: 1000;
+    font-size: 20px;
+    color: green;
+}
+  
 .hClass {
     color: #fff;
     margin-top: 5px;
@@ -204,7 +238,7 @@ input:focus ~ .divClass {
     cursor: pointer;
     font-size: 0.9em;
     font-weight: 900;
-    padding: 10px 51px;
+    padding: 10px 49px;
     background: #fff;
     border-radius: 4px;
 }
@@ -212,7 +246,7 @@ input:focus ~ .divClass {
 .ButtonClass:hover {
     color: white;
     transition: 0.5s;
-    background: gray;
+    background: teal;
 }
 
 .SubmitClass:hover {

@@ -1,8 +1,8 @@
 module.exports = {
-    images: {
-      unoptimized: true,
-    },
-    env: {
-      REACT_APP_BE_URL: 'http://localhost:5000'
-    }
+  images: {
+    unoptimized: true,
+  },
+  env: {
+    REACT_APP_BE_URL: 'https://gifted-mittens-mite.cyclic.app/'
   }
+} 

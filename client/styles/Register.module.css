@@ -15,7 +15,7 @@
     background: #1c1c1c;
     /* border: 5px solid black; */
 }
-
+  
 .boxClass::before {
     content: '';
     position: absolute;
@@ -97,6 +97,24 @@
     background: #222;
     border-radius: 8px;
     flex-direction: column;
+}
+
+.alertClass {
+    flex-direction: row;
+    align-items: center;
+    position: fixed;
+    top: 30px;  
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    width: 900em;
+    max-width: 9000px;
+    font-weight: 1000;
+    font-size: 20px;
+    color: red;
+    justify-content: center;
 }
 
 .formClass .hClass {
@@ -198,7 +216,7 @@ input:focus ~ .divClass {
     font-size: 0.9em;
     font-weight: 900;
     /* padding: 10px 35px; */
-    padding: 10px 105px;
+    padding: 10px 107px;
     background: #fff;
     border-radius: 4px;
 }
@@ -212,5 +230,5 @@ input:focus ~ .divClass {
 .SubmitClass:hover {
     color: white;
     transition: 0.5s;
-    background: green;
+    background: blue;
 }
