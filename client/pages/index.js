@@ -1,7 +1,5 @@
 import React from "react";
 
-import 'bootstrap/dist/css/bootstrap.min.css'
-
 //import component
 import Footer from "../components/profilePage/Footer";
 import Navbar from "../components/Navbar";
