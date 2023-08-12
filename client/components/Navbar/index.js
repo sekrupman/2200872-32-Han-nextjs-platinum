@@ -72,7 +72,9 @@ async function handleSubmit() {
     {activeToken.data.username ? 
   <Nav className='right-panel' dark expand="md">
     <NavItem>
-      <img src={activeToken.data.avatar} alt="" width={50} height={50} />
+      <NavLink href ="/profile">
+        <img src={activeToken.data.avatar} alt="" width={50} height={50} style={{ cursor: 'pointer' }}/>
+      </NavLink>
     </NavItem>
     <NavItem>
       <NavLink className="text-white">Hello, {activeToken.data.username}</NavLink>

@@ -28,30 +28,26 @@ const userDummy = [{
 }]
 
 function ProfilePage() {
-    // dari token, ambil id
-    // useEffect(() => {
-    //     try{
-    //         if (!localStorage.getItem('tokenId')) {
-    //             window.location.replace('/login')
-    //         }
-    //     } catch(error) {
-    //         console.error('Error occurred while verifying token:', error);
-    //     }
-    // }, [])
+     // state
+     const [profileUser, setProfileUser] = useState({ data: userDummy });
 
-    // const id = localStorage.getItem('tokenId')
-    const id = 4
-
-    // state
-    const [profileUser, setProfileUser] = useState({ data: userDummy[0] });
-    useEffect(() => {
-        userProfileApi(id).then( async (result) => {
-            if (result !== undefined) {
-                await setProfileUser({ data: result.data })
-            } 
-        })
-    },[] )
-
+     // dari token, ambil id
+     useEffect(() => {
+         try{
+             if (!localStorage.getItem('tokenId')) {
+                 window.location.replace('/login')
+             } else {
+                 const id = localStorage.getItem('tokenId')
+                 userProfileApi(id).then( async (result) => {
+                     if (result !== undefined) {
+                         await setProfileUser({ data: result.data })
+                     } 
+                 })
+             }
+         } catch(error) {
+             console.error('Error occurred while verifying token:', error);
+         }
+     }, [])
     
     return (
         <div className={style.bgProfile}>

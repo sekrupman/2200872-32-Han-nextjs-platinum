@@ -1,4 +1,4 @@
-/// API Connection to get user's information
+// API Connection to get user's information
 function userProfileApi(id) {
     var requestOptions = {
     method: 'GET',
@@ -11,7 +11,7 @@ function userProfileApi(id) {
 }
 
 
-/// API Connection to save updated user's information
+// API Connection to save updated user's information
 function upsertProfileApi(id, profileUser) {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
@@ -36,4 +36,16 @@ function upsertProfileApi(id, profileUser) {
 
 }
 
-export { userProfileApi, upsertProfileApi };
+// API Connection to get user's game history
+function historyGameApi(id) {
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+      
+    return fetch(`${process.env.REACT_APP_BE_URL}/profile/history/${id}`, requestOptions)
+        .then(response => response.json())
+        .catch(error => console.log('error', error));
+}
+
+export { userProfileApi, upsertProfileApi, historyGameApi };
