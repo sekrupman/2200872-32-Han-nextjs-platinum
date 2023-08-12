@@ -1,8 +1,9 @@
 import React , {useState, useEffect} from "react";
-import {Card, CardBody, CardTitle} from 'reactstrap';
+import {Card, CardBody, CardTitle, Label} from 'reactstrap';
 
 //import api
 import { PopularGamesApi } from '../../api/landingGamesApi';
+import { UserPlayedGames } from '../../api/userGamesApi'
 
 // import styles
 import styles from '../../styles/LandingPage/mainPage/mainpage.module.css'
@@ -44,20 +45,27 @@ const gameList = [
 function PopularGames(){
     // get data of game
     const [ popularData, setPopularData ] = useState({ data: gameList });
-    useEffect(() => {
+    const [ playedGames, setPlayedGames ] = useState([])
+
+ useEffect(() => {
         try {
             PopularGamesApi().then((result) => {   
-                if (!result) {
+                if (result !== undefined) {
+                    setPopularData({data: result.data})
+                  } else {
                     setPopularData({data: gameList})
-                } else {
-                    const length = result.data.length
-                    if (length < 5) {
-                        setPopularData({data: [...result.data, gameList.slice(0,5-length)]})
-                    } else {
-                        setPopularData({data: result.data})
-                    }            
-                }    
+                  }
             })
+            
+            const id = Number(localStorage.getItem('tokenId'));
+            if (id) {
+                UserPlayedGames(id).then((gamePlayed) => {
+                    if (gamePlayed !== undefined) {
+                        setPlayedGames(gamePlayed.data)
+                    }
+                })
+            }           
+
         } catch (error) {
             console.log(error)
         }
@@ -75,7 +83,7 @@ function PopularGames(){
         } catch (error) {
           console.error('Error occurred while verifying token:', error);
         }
-    }; 
+    };
 
     return(
         <div className={styles["popular-game"]}>
@@ -105,11 +113,32 @@ function PopularGames(){
                                 borderTopLeftRadius:"25px",
                                 textAlign: "center",
                                 width: '11rem',
-                                height: '9rem'
-                            }}
+                                height: '9rem',
+                                borderRadius:'25%'
+                                }}
                             alt=""
                             src={game.game_image_url}
                         />
+
+                        {playedGames.includes(game.gameid) ?
+                            <Label
+                                style={{
+                                    position: 'bottom',
+                                    width: '9rem',
+                                    paddingLeft: '1rem',
+                                    marginLeft: '1rem',
+                                    paddingRight: '1rem',
+                                    backgroundColor: '#291D89',
+                                    color: 'white',
+                                    zindex: '100',
+                                    borderRadius:'25px'
+                                    }}>
+                                PLAYED
+                            </Label>
+                            :
+                            <div></div>
+                        }
+
                         <CardBody>
                             <CardTitle
                                 className="h6 text-light"> 
