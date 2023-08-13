@@ -10,7 +10,7 @@ import { Spin } from 'antd'
 import styles from '../../styles/RegisterLoginPage/Login.module.css'
 
 // IMPORT API
-import { LoginApi } from '../../api/LoginApi'
+import { LoginApi } from '../../api/loginApi'
 
 const antIcon = (
     <LoadingOutlined

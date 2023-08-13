@@ -252,12 +252,7 @@ export default function Sicbo() {
                             className={styles.sicboExitButton}
                             style={{paddingRight: "25px"}}
                             onClick={onDismissAlert}>
-                                Let me play again! </button>
-                        <button 
-                            className={styles.sicboExitButton}
-                            style={{paddingRight: "25px"}}
-                            onClick={handleSaveExit}>
-                                Save and exit game!</button>
+                                Back to game ! </button>
                     </ModalFooter>
                 </Modal>
     
