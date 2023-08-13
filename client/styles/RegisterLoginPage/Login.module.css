@@ -159,7 +159,7 @@
 }
 
 input:valid ~ .labelClass,
-input:focus ~ .labelClass {
+input:focus ~ .labelClass{
     color: #fff;
     font-size: 0.75em;
     transform: translateY(-34px);

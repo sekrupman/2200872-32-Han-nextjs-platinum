@@ -10,7 +10,8 @@ import {
     ModalFooter,
     Input,
     Label,
-    Spinner
+    Spinner, 
+    UncontrolledTooltip
 } from "reactstrap";
 
 // import css
@@ -91,11 +92,17 @@ function ModalProfile(profileUser) {
                 >
                     <div className="d-flex justify-content-center">
                         <img src={oldData.avatar} className={style.styleAvatar} />
-                        <Link href="/profile/avatar">
-                            <p className={style.changeAvatar}>
-                                <TbCameraPlus size={26}/>
-                            </p> 
+                        <Link href="/profile/avatar" >
+                            <p className={style.changeAvatar} id="logoCamera">
+                                <TbCameraPlus size={26} style={{cursor: "pointer"}}/>
+                            </p>
                         </Link>
+                        <UncontrolledTooltip
+                            placement="bottom"
+                            target="logoCamera"
+                            >
+                            Change Avatar
+                        </UncontrolledTooltip> 
                     </div>  
                     <div className="d-flex justify-content-between">
                         <div>

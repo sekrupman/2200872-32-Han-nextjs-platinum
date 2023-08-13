@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { FaSignOutAlt } from "react-icons/fa";
+// import { FaSignOutAlt } from "react-icons/fa";
+import {
+    NavLink,
+  } from 'reactstrap';
 
 // import css
-import styles from '../../../styles/LandingPage/mainPage/mainpage.module.css'
+import styles from '../../styles/LandingPage/mainPage/mainpage.module.css'
 
 
 function LogoutModal() {
@@ -22,14 +25,20 @@ function LogoutModal() {
 
     return (
         <div>
-            <Button 
+            {/* <Button 
                 color="transparent" 
                 className="mx-3" 
                 id="logout-button" 
                 onClick={toggle}>
                 <FaSignOutAlt size={30} color="white"/>
                 <h6 className="text-light pt-2">LOGOUT</h6>
-            </Button>
+            </Button> */}
+        <NavLink className="text-white" onClick={toggle} style={{ cursor: 'pointer' }}
+            onMouseOver={(e) => e.target.style.cursor = 'pointer'}
+            onMouseOut={(e) => e.target.style.cursor = 'auto'}>
+            Logout
+        </NavLink>
+
 
         <Modal isOpen={modal} toggle={toggle} style={{ backgroundColor:'aliceblue'}}>
             <ModalHeader toggle={toggle}>Logout Confirmation</ModalHeader>
