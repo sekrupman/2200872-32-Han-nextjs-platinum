@@ -20,5 +20,3 @@ function InsertScoreApi(user_id, game_url, total_ronde, skor) {
   };
   
   export { InsertScoreApi }
-  
-  

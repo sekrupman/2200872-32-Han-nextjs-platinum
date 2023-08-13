@@ -10,5 +10,17 @@ function gameListApi() {
     .catch(error => console.log('error', error));
 }
 
-export { gameListApi };
+/// API Connection to get leaderboard of game
+function leaderboardGameApi(gameId) {
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    return fetch(`${process.env.REACT_APP_BE_URL}/gamelist/leaderboard/${gameId}`, requestOptions)
+    .then(response => response.json())
+    .catch(error => console.log('error', error));
+}
+
+export { gameListApi, leaderboardGameApi};
 
