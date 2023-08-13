@@ -10,10 +10,10 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const pathname = router.pathname;
 
-  if (!["/register", "/login", "/reset-password"].includes(pathname)) {
-    import('bootstrap/dist/css/bootstrap.min.css');
-    import ('../styles/globals.css')
+  if (["/register", "/login", "/reset-password"].includes(pathname)) {
+    import ('../styles/globals.css')    
   } else {
+    import('bootstrap/dist/css/bootstrap.min.css');
     import ('../styles/globals.css')
   }
 

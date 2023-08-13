@@ -7,10 +7,10 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 
 // IMPORT CSS
-import styles from '../../styles/Login.module.css'
+import styles from '../../styles/RegisterLoginPage/Login.module.css'
 
 // IMPORT API
-import { LoginApi } from '../../api-lib/LoginApi'
+import { LoginApi } from '../../api/LoginApi'
 
 const antIcon = (
     <LoadingOutlined
@@ -165,11 +165,11 @@ function LoginPage() {
                 `${styles.LinkClass}`
             }>
         <Link
-             href="/ResetPasswordPage">
+             href="/reset-password">
                 Forgot Password?
         </Link>
         <Link
-             href="/RegisterPage">
+             href="/register">
                 Don't have account? register
         </Link>
         </div>

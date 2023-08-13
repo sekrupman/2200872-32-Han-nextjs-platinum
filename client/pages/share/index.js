@@ -1,9 +1,9 @@
 import React from "react";
 
-import Footer from "../../components/profilePage/Footer";
+import Footer from "../../components/Footer/FooterAbs";
 import Navbar from "../../components/Navbar";
 
-import style from '../../styles/share.module.css'
+import style from '../../styles/LandingPage/share/share.module.css'
 
 import { Form, FormGroup, Button, Label, Input } from 'reactstrap';
 import {

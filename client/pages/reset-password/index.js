@@ -6,7 +6,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 
 // IMPORT CSS
-import styles from '../../styles/Reset.module.css'
+import styles from '../../styles/RegisterLoginPage/Reset.module.css'
 
 const antIcon = (
     <LoadingOutlined
@@ -37,7 +37,7 @@ function ResetPasswordPage() {
         setShowBackSpinner(true)
         setTimeout(() => {
         setShowBackSpinner(false)
-        window.location.href = '/LoginPage'
+        window.location.href = '/login'
         }, 2000)
     }
 

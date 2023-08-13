@@ -1,15 +1,16 @@
 import React from "react";
 
-import Image from "next/dist/client/image";
+import Image from "next/image";
+
 // import css
-import styles from '../../../styles/sicbo/Sicbo.module.css'
+import styles from '../../../styles/games/Sicbo.module.css'
 
 export default function SicboRules() {
     return (
         <div className={styles.sicboRules}>
             <div className="d-flex justify-content-center">
                 <Image
-                    src="/SicboGame/dragon.png"
+                    src="/images/game/SicboGame/dragon.png"
                     width="250rem"
                     height="70rem"
                     >

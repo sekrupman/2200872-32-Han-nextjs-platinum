@@ -1,5 +1,5 @@
 .sicboBackground{
-    background-image: url("/SicboGame/background.png");
+    background-image: url("/images/game/SicboGame/background.png");
     background-size: cover;
     background-repeat: no-repeat;
     min-width: 100wh;
@@ -30,7 +30,7 @@
 }
 
 .sicboCardButtonDa{
-    background-image: url("/SicboGame/da.png");
+    background-image: url("/images/game/SicboGame/da.png");
     background-size: cover;
     width: 6.5rem;
     height: 6.5rem;
@@ -38,7 +38,7 @@
 }
 
 .sicboCardButtonXiao{
-    background-image: url("/SicboGame/xiao.png");
+    background-image: url("/images/game/SicboGame/xiao.png");
     background-size: cover;
     width: 6.5rem;
     height: 6.5rem;
@@ -67,7 +67,7 @@
 
 .sicboExitButton{
     background-color:rgba(221,203,164,0.8);
-    background-image: url("/SicboGame/coin.png");
+    background-image: url("/images/game/SicboGame/coin.png");
     background-position: 0%;
     background-size: contain;
     background-repeat: no-repeat;

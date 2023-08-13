@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateRound, updateScore } from "../../../redux/action";
 
 // import css
-import styles from '../../../styles/sicbo/Sicbo.module.css'
+import styles from '../../../styles/games/Sicbo.module.css'
 
 // import api 
 import {InsertScoreApi} from '../../../api/gameScoreApi';
@@ -42,7 +42,10 @@ export default function Sicbo() {
     const [alertVisible, setAlertVisible] = useState(false);
     const [alertMessage, setAlertMessage] = useState(null);
     const [modalVisible, setModalVisible] = useState(false);
-    const [processing, setProcessing] = useState(false);
+
+    // assign states for spinner
+    const [rollingDice, setRollingDice] = useState(false);
+    const [submitData, setSubmitData] = useState(false);
 
     // get original state of redux
     const reduxState = useSelector(state => state.reducer)
@@ -72,7 +75,7 @@ export default function Sicbo() {
             setAlertMessage("You need to place your bet ...")
             setAlertVisible(true)
         } else {
-            setProcessing(true);
+            setRollingDice(true);
 
             let count = 0;
 
@@ -106,7 +109,7 @@ export default function Sicbo() {
                     }
 
                     setTotalDiceResult(newTotalDiceResult)
-                    setProcessing(false)
+                    setRollingDice(false)
                 }
             }, 100 )
 
@@ -178,12 +181,14 @@ export default function Sicbo() {
     // function upon save and exit 
     function handleSaveExit(event) {
         try {
+            setSubmitData(true);
             event.preventDefault()
             InsertScoreApi(userId, gameUrl, reduxState.round, reduxState.score).then(async result => {
                 if (!result) {
                     await alert("Internal Server Error!")
                 } else {
                     if (result.status === "success") {
+                        await setSubmitData(false)
                         await window.location.replace('/')
                     } else {
                         await alert("Internal Server Error!")
@@ -298,15 +303,14 @@ export default function Sicbo() {
                         className={styles.sicboRollButton}
                         onClick={handleRoll}
                     >
-                        {processing ? 
+                        {rollingDice ? 
                         <div className="d-flex justify-content-center" style={{ gap: "10px"}}>
                             <h4>Rolling ... </h4>
-                            <Spinner>
-                                Rolling...
+                            <Spinner children={false}>
                             </Spinner>
                         </div>
                         :
-                        <h3>{totalDiceResult ? "Finish!": "Roll the dice"}</h3>
+                        <div><h3>{totalDiceResult ? "Finish!": "Roll the dice"}</h3></div>
                         }
 
                     </button>
@@ -316,7 +320,7 @@ export default function Sicbo() {
                     {diceResult.map((die) => {
                         return (
                             <Image
-                                src={`/SicboGame/${die}.png`}
+                                src={`/images/game/SicboGame/${die}.png`}
                                 alt=""
                                 width="75rem"
                                 height="75rem"
@@ -341,8 +345,18 @@ export default function Sicbo() {
                 <button 
                     className={styles.sicboExitButton}
                     onClick={handleSaveExit}
-                    >Save and Exit Game . . .
-                    </button>
+                >
+                    {submitData ? 
+                    <div className="d-flex justify-content-center" style={{ gap: "10px"}}>
+                        <Spinner children={false}>
+                        </Spinner>
+                        <h6>Saving. . .</h6>
+                    </div>
+                    :
+                    <div><h6>Save and Exit Game !</h6></div>
+                    }
+
+                </button>
             </div>
         </div>
     )

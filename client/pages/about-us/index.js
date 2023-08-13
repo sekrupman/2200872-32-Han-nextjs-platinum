@@ -2,11 +2,11 @@ import React from "react";
 import { FaGithub } from 'react-icons/fa';
 
 //import component
-import Footer from "../../components/profilePage/Footer";
+import Footer from "../../components/Footer/FooterAbs";
 import Navbar from "../../components/Navbar";
 
 //import style
-import style from '../../styles/aboutus.module.css'
+import style from '../../styles/LandingPage/aboutus/aboutus.module.css'
 
 
 function aboutUs(){
@@ -17,8 +17,8 @@ function aboutUs(){
            
              <div className={style.container}>
                 
-             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-  <div style={{ marginLeft: '20px', marginRight: '50px', marginTop: '10px' }}>
+             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'start', minHeight: '100vh' }}>
+  <div style={{ marginLeft: '20px', marginRight: '50px', marginTop: '30px' }}>
     <div className={style['about-title']} style={{
       backgroundColor: '#4E67EB',
       padding: '20px',

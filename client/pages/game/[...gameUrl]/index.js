@@ -27,7 +27,6 @@ export default function gameUrl() {
         if (!localStorage.getItem('tokenId')) {
             window.location.replace('/login');
         } else {
-            // get router
             getData()
         }
     }, [])
