@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import { useRouter } from 'next/router'
 
 // import api
 import { InsertScoreApi } from "../../../api/gameScoreApi"
@@ -13,11 +14,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateRound, updateScore } from "../../../redux/action";
 
 function RockPaperScissorsPage() {
+    const router = useRouter();
+    const game_url = router.pathname;
     const reduxState = useSelector(state => state);
     const dispatch = useDispatch();
-    // const username = localStorage.getItem("tokenUsername");
-    const username = 'aaron'
     const choices = ["rock", "paper", "scissors"];
+    const [username, setUsername] = useState(null);
     const [userChoice, setUserChoice] = useState(null);
     const [computerChoice, setComputerChoice] = useState(null);
     const [result, setResult] = useState('VS');
@@ -26,9 +28,7 @@ function RockPaperScissorsPage() {
 
     const handleButtonDone = async () => {
         try {
-            // const user_id = localStorage.getItem("tokenId");
-            const user_id = 19;
-            const game_url = "rps";
+            const user_id = localStorage.getItem("tokenId");
             await InsertScoreApi(user_id, game_url, reduxState.reducer.round, reduxState.reducer.score);
             setInsertMessage(`Skor tersimpan di user ${username} dengan skor ${reduxState.reducer.score} dengan jumlah ronde ${reduxState.reducer.round}`);
             dispatch(updateRound(0))
@@ -90,7 +90,11 @@ function RockPaperScissorsPage() {
     useEffect(() => {
         try {
             if (!localStorage.getItem('tokenId')) {
-                window.location.replace('/login')
+                return window.location.replace('/LoginPage')
+            } else {
+                const userName = localStorage.getItem("tokenUsername");
+                setUsername(userName);
+                return;
             }
         } catch (error) {
             console.error('Error occurred while verifying token:', error);
