@@ -5,6 +5,21 @@
     margin: 0;
 }
 
+.imageContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.playedLabel {
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
 .gamelistContainer {
     width: 100%;
     display: flex;
@@ -35,7 +50,7 @@
     padding: 15px;
 }
 
-.gamelistCard img {
+.gamelistImg {
     width: 100%;
     height: 10rem;
     object-fit: cover;
@@ -56,7 +71,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: pre-wrap;
-  }
+}
 
 .gamelistCard Button {
     margin-top: auto;
@@ -72,4 +87,3 @@
 .gamelistCard Button:hover {
     background-color: #0056b3;
 }
-

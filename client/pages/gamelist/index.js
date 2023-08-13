@@ -1,100 +1,124 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardBody, CardTitle, CardText, Button, Container } from "reactstrap";
-import { gameListApi } from '../../api/gameListApi';
+import { Card, CardBody, CardTitle, CardText, Button, Container, Label } from "reactstrap";
 
 //import css
 import styles from '../../styles/Gamelist.module.css';
 
+// import api
+import { gameListApi } from '../../api/gameListApi';
+import { UserPlayedGames } from '../../api/userGamesApi'
+
+
 // use dummy data in case the server is error
 const gameList = [
     {
-        gameid: -1,
+        gameid: 1,
         game_name: "Rock Paper Scissors",
         game_description: "Traditional Games to play with your best friends",
         game_url: "rps",
         game_image_url: "https://drive.google.com/uc?export=view&id=1JKSkvsWkXTELJCjhsfbR1lciNBd5oAxK"
     },
     {
-        gameid: -2,
+        gameid: 2,
         game_name: "Caroom Pool",
         game_description: "Carrom Pool is an easy-to-play multiplayer board game. Are you up for the challenge?",
         game_url: "caroompool",
         game_image_url: "https://drive.google.com/uc?export=view&id=1tMFG2eoQU1hFssOmwmSTLSF9DnVSHfL-"
     },
     {
-        gameid: -3,
+        gameid: 3,
         game_name: "Soccer Stars",
         game_description: "Easy to pick up and fun to play. Will you take the cup home?",
         game_url: "soccerstars",
         game_image_url: "https://drive.google.com/uc?export=view&id=1Wy3XWpfDQDK1XSAebBpSXY_GSYvj-oxu"
     },
     {
-        gameid:-4,
+        gameid: 4,
         game_name: "Mini Football",
         game_description: "Wild football fun at your fingertips!",
         game_url: "minifootball",
         game_image_url: "https://drive.google.com/uc?export=view&id=15aVwrLkByle80O40XH4tA7o3JsvAv8hR"
     },
     {
-        gameid:-5,
+        gameid: 5,
         game_name: "Basketball Stars",
         game_description: "Dribble, shoot, score, WIN, in the world's best multiplayer basketball mobile game!",
         game_url: "basketballstars",
         game_image_url: "https://drive.google.com/uc?export=view&id=1SBt4IwrJRbeQb3vBcVc5ZpuDBVbEKc43"
     },
     {
-        gameid:-6,
+        gameid: 6,
         game_name: "Mini Militia",
         game_description: "Battle with up to 6 players online in this fun cartoon themed 2D game.",
         game_url: "minimilitia",
         game_image_url: "https://drive.google.com/uc?export=view&id=1djK1wysUvSKxB0s76UJVzEY4JG6NrVrg"
     }
-  ];
-
+];
 
 function GameListPage() {
     // state
     const [gameslist, setGamelist] = useState({ data: gameList });
+    const [username, setUsername] = useState(null);
+    const [playedGames, setPlayedGames] = useState([]);
+
+    function hasPlayedGame(gameId, playedGames) {
+        return playedGames.some(game => game === gameId);
+    }
 
     function handleButtonClick(game_url) {
-        try {  
-          // check if token exist
-        if(localStorage.getItem('tokenUsername')) {
-            window.location.href = `/game/${game_url}`;
-        } else {
-            window.location.href = '/login';
-        }
+        try {
+            // check if token exist
+            if (localStorage.getItem('tokenUsername')) {
+                window.location.href = game_url;
+            } else {
+                window.location.href = '/login';
+            }
         } catch (error) {
-          console.error('Error occurred while verifying token:', error);
+            console.error('Error occurred while verifying token:', error);
         }
-    }; 
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const result = await gameListApi();
-                if (result !== undefined) {
-                    console.log(result);
-                    setGamelist({ data: result.data });
-                }
+                // const result = await gameListApi();
+                // if (result !== undefined) {
+                //     setGamelist({ data: result.data })
+                // }
+
+                // const id = Number(localStorage.getItem('tokenId'))
+                // if (id) {
+                //     const gamePlayed = await UserPlayedGames(id);
+                //     console.log("isi game played:", gamePlayed.data)
+                //     if (gamePlayed !== undefined) {
+                //         setPlayedGames(gamePlayed.data)
+                //     }
+                // }
+                const gamePlayed = { data: [1, 3, 4] }
+                setPlayedGames(gamePlayed.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData(); // Call the fetchData function inside useEffect
+        const userName = localStorage.getItem('tokenUsername');
+        console.log("localstorage:", userName)
+        setUsername(userName);
+        console.log("username: ", username)
     }, []);
 
     return (
         <div className={styles.gamelistBody}>
             <Container className={styles.gamelistContainer}>
                 {gameslist.data.map(function (data) {
+                    const isPlayed = hasPlayedGame(data.gameid, playedGames);
                     return (
                         <Card className={styles.gamelistCardClass}>
-                            <img
-                                alt="Sample"
-                                src={data.game_image_url}
-                            />    
+                            <div className={styles.imageContainer}>
+                                <img alt="Sample" className={styles.gamelistImg} src={data.game_image_url} />
+                                {isPlayed && <Label className={`${styles.playedLabel} text-success`}>Game Played</Label>}
+                            </div>
                             <CardBody className={`${styles.gamelistCard} text-dark`}>
                                 <CardTitle className={`${styles.gamelistJudul} text-bold`}>
                                     {data.game_name}
