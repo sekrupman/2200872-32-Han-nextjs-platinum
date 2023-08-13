@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
-import styles from '../../styles/LandingPage/community/modal.module.css'
+import styles from '../../../styles/LandingPage/community/modal.module.css'
 
 function ModalProfile(props){
     const { onClose, userData } = props;

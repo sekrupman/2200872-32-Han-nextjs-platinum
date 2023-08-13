@@ -1,12 +1,18 @@
 import React , {useState, useEffect} from "react";
 import {Card, CardBody, CardSubtitle, CardTitle} from 'reactstrap';
 import {GiGoldBar} from 'react-icons/gi';
+import { Skeleton } from 'antd';
 
 // import api
 import { LeaderboardAPI } from '../../api/communityApi';
 
 // import styles
 import styles from '../../styles/LandingPage/mainPage/mainpage.module.css'
+
+// import redux
+import { useDispatch, useSelector } from "react-redux";
+import { loadingSkeleton } from "../../redux/action";
+
 
 // use dummy data in case the server is error
 const leaderList = [
@@ -48,23 +54,29 @@ const leaderList = [
     }
   ];
 
+
 function LeaderBoard(){
+    // get original state of redux
+    const reduxState = useSelector(state => state.reducer)
+    const dispatch = useDispatch()
+
     // get data of leaderboard
     const [ leaderboardData, setLeaderboardData ] = useState({ data: leaderList });
     useEffect(() => {
-      LeaderboardAPI().then((result) => {   
-        if (!result) {
-            setLeaderboardData({data: leaderList})
-        } else {
-            const length = result.data.length
-            if (length < 5) {
-                setLeaderboardData({data: [...result.data, leaderList.slice(0,5-length)]})
-            } else {
-                setLeaderboardData({data: result.data})
-            }            
-        }    
-      })
+        try {
+            LeaderboardAPI().then((result) => {   
+                if (result !== undefined) {
+                    if (result.data.length > 0) {
+                        setLeaderboardData({data: result.data})
+                    }
+                }
+            })
+            .finally(() => dispatch(loadingSkeleton(false)))
+        } catch (error) {
+            console.log(error)
+        }
     }, []);
+
     return(
         <div className={styles["leaderboard"]}>
             <div>
@@ -73,61 +85,79 @@ function LeaderBoard(){
                     <a href="/community" className="text-light fst-italic text-decoration-underline"><h5>{"See all >>>"}</h5></a>
                 </div>
 
-                <div className="d-flex justify-content-between" style={{gap: "1rem"}}>
-                    {leaderboardData.data.map((leader) => (
-                        <div key={leader.id}>
-                            <Card
-                                outline
-                                style={{
-                                    width: '11rem',
-                                    height: '16rem', 
-                                    textAlign: "center",
-                                    backgroundColor: "#4E67EB",
-                                    borderRadius:"25px"
-                                }}
-                                >
-                                <img
-                                    className="p-1"
-                                    style={{
-                                        borderTopRightRadius:"25px",
-                                        borderTopLeftRadius:"25px",
-                                        textAlign: "center",
-                                        width: '11rem',
-                                        height: '9rem',
-                                        borderRadius:'25px'
-                                    }}
-                                    alt=""
-                                    src={leader.avatar}
-                                />
-                                <CardBody>
-                                    <CardTitle className="h5 mb-3 text-light">
-                                        {leader.username}
-                                    </CardTitle>
+                {reduxState.skeleton ? (
+                    // run skeleton while true
+                    <div 
+                        className="d-flex justify-content-between align-items-center"
+                        style={{paddingRight: "20px", gap: "10px"}}
+                        >
+                        {[...Array(5)].map((_, index) => (
+                        <Skeleton active paragraph={false}
+                            style={{
+                                height: "16rem", width: "11rem", 
+                                paddingTop: "7rem",
+                                backgroundColor:"#4E67EB",
+                                borderRadius: "25px"}}/>
+                        ))}
+                    </div>
 
-                                    <CardSubtitle className="h6 text-light">
-                                        <div className="d-flex justify-content-around">
-                                            <GiGoldBar
-                                                size={30}
-                                                color=
-                                                    {(() => {
-                                                        switch (true) {
-                                                            case leader.rank === 'gold':   
-                                                                return "#FFD700";
-                                                            case leader.rank === 'silver': 
-                                                                return "#C0C0C0";
-                                                            default:      
-                                                                return "#B08D57";
-                                                        }
-                                                    })} >
-                                            </GiGoldBar>
-                                            <div>{leader.score}</div>
-                                        </div>
-                                    </CardSubtitle>
-                                </CardBody>
-                            </Card>
-                        </div>
-                    ))};
-                </div>
+                ) : ( 
+
+                    // Render actual data when skeleton stops
+                    <div className="d-flex justify-content-between" style={{gap: "1rem"}}>
+                        {leaderboardData.data.map((leader) => (
+                            <div key={leader.id}>
+                                <Card
+                                    outline
+                                    style={{
+                                        width: '11rem',
+                                        height: '16rem', 
+                                        textAlign: "center",
+                                        backgroundColor: "#4E67EB",
+                                        borderRadius:"25px"
+                                    }}
+                                    >
+                                    <img
+                                        className="p-1"
+                                        style={{
+                                            borderTopRightRadius:"25px",
+                                            borderTopLeftRadius:"25px",
+                                            textAlign: "center",
+                                            width: '11rem',
+                                            height: '9rem',
+                                            borderRadius:'25px'
+                                        }}
+                                        alt=""
+                                        src={leader.avatar}
+                                    />
+                                    <CardBody>
+                                        <CardTitle className="h5 mb-3 text-light">
+                                            {leader.username}
+                                        </CardTitle>
+
+                                        <CardSubtitle className="h6 text-light">
+                                            <div className="d-flex justify-content-around">
+                                                {(() => {switch (true) {
+                                                    case leader.rank === 'gold' :
+                                                        return(<GiGoldBar size={30} style={{color: "#FFD700"}} />)
+                                                    case leader.rank === 'silver' :
+                                                        return(<GiGoldBar size={30} style={{color: "#C0C0C0"}} />)
+                                                    default: 
+                                                        return(<GiGoldBar size={30} style={{color: "#B08D57"}} />)
+                                                    }}
+                                                )()}
+
+                                                
+                                                <div>{leader.score}</div>
+                                            </div>
+                                        </CardSubtitle>
+                                    </CardBody>
+                                </Card>
+                            </div>
+                        ))}
+                    </div>
+                
+                )}
             </div>
         </div>
     )

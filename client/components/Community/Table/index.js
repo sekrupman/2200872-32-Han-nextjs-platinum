@@ -6,11 +6,14 @@ import { Skeleton } from 'antd';
 import ModalProfile from '../ModalProfile';
 
 // import api
-import { CommunityApi } from '../../api/communityApi';
+import { CommunityApi } from '../../../api/communityApi';
 
 // import styles
-import styles from '../../styles/LandingPage/community/table.module.css'
+import styles from '../../../styles/LandingPage/community/table.module.css'
 
+// import redux
+import { useDispatch, useSelector } from "react-redux";
+import { loadingSkeleton } from "../../../redux/action";
 
 // use dummy data in case the server is error
 const leaderList = [
@@ -51,36 +54,37 @@ const leaderList = [
         avatar: "https://source.unsplash.com/featured/104"
     }
   ];
+
+
   function Table() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [clickedUserData, setClickedUserData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    
+    // get original state of redux
+    const reduxState = useSelector(state => state.reducer)
+    const dispatch = useDispatch()
+
+    const [communityData, setCommunityData] = useState({ data: leaderList }); 
 
     const handleRowClick = (userData) => {
       setClickedUserData(userData);
       setIsModalOpen(true);
     };
 
-    const [communityData, setCommunityData] = useState({ data: [] }); 
-
     useEffect(() => {
-      setIsLoading(true); 
-      CommunityApi()
-        .then((result) => {
-          if (!result) {
-            setCommunityData({ data: leaderList });
-          } else {
-            const length = result.data.length;
-            if (length < 5) {
-              setCommunityData({
-                data: [...result.data, ...leaderList.slice(0, 5 - length)],
-              });
-            } else {
-              setCommunityData({ data: result.data });
+      try {
+        CommunityApi()
+          .then((result) => {
+            if (result !== undefined) {
+              if (result.data.length > 0) {
+                setCommunityData({ data: result.data });
+              }
             }
-          }
-        })
-        .finally(() => setIsLoading(false));
+          })
+          .finally(() => dispatch(loadingSkeleton(false)));
+      } catch (error) {
+        console.log(error)
+      }
     }, []);
 
     return (
@@ -99,29 +103,33 @@ const leaderList = [
           </tr>
         </thead>
         <tbody>
-          {isLoading ? (
+          {reduxState.skeleton ? (
+
+            // run skeleton while true
             <>
-              {[...Array(10)].map((_, index) => (
-                <tr key={index}>
-                  <td>
-                    <Skeleton active paragraph={false}/>
-                  </td>
-                  <td>
-                    <Skeleton active paragraph={false}/>
-                  </td>
-                  <td>
-                    <Skeleton active paragraph={false}/>
-                  </td>
-                  <td>
-                    <Skeleton active paragraph={false}/>
-                  </td>
-                  <td>
-                    <Skeleton active paragraph={false}/>
-                  </td>
-                </tr>
-              ))}
+            {[...Array(10)].map((_, index) => (
+              <tr key={index}>
+                <td>
+                  <Skeleton active paragraph={false}/>
+                </td>
+                <td>
+                  <Skeleton active paragraph={false}/>
+                </td>
+                <td>
+                  <Skeleton active paragraph={false}/>
+                </td>
+                <td>
+                  <Skeleton active paragraph={false}/>
+                </td>
+                <td>
+                  <Skeleton active paragraph={false}/>
+                </td>
+              </tr>
+            ))}
             </>
+
           ) : (
+            
             // Render actual data
             communityData.data.map((data) => (
               <tr 
@@ -152,6 +160,7 @@ const leaderList = [
               </tr>
             ))
           )}
+
         </tbody>
       </table>
       {isModalOpen && clickedUserData && (
