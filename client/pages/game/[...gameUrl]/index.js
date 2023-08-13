@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Button } from 'reactstrap'
+import { Button, Spinner } from 'reactstrap'
 import { useRouter } from "next/router";
 
 // import redux
@@ -13,6 +13,7 @@ import { InsertScoreApi } from '../../../api/gameScoreApi';
 export default function gameUrl() {
     const [userId, setUserId] = useState(0);
     const [username, setUsername] = useState(null);
+    const [submitData, setSubmitData] = useState(false);
 
     // get original state of redux
     const reduxState = useSelector(state => state.reducer)
@@ -52,12 +53,14 @@ export default function gameUrl() {
     // function upon exit 
     function handleExit(event) {
         try {
+            setSubmitData(true);
             event.preventDefault()
             InsertScoreApi(userId, pathname, reduxState.round, reduxState.score).then(async result => {
                 if (!result) {
                     await alert("Internal Server Error!")
                 } else {
                     if (result.status === "success") {
+                        await setSubmitData(false)
                         await window.location.replace('/')
                     } else {
                         await alert("Internal Server Error!")
@@ -88,7 +91,18 @@ export default function gameUrl() {
             <div className="pt-4">
                 <Button
                     onClick={handleExit}
-                >Save and Back to Home</Button>
+                >
+                    {submitData ? 
+                        <div className="d-flex justify-content-center" style={{ gap: "10px"}}>
+                            <Spinner children={false}>
+                            </Spinner>
+                            <h6>Saving. . .</h6>
+                        </div>
+                        :
+
+                        <div>Save and Back to Home</div>
+                    }
+                </Button>
             </div>
         </div>
     )
