@@ -7,6 +7,7 @@ import Navbar from "../../components/Navbar";
 
 //import style
 import style from '../../styles/LandingPage/aboutus/aboutus.module.css'
+import Image from 'next/image';
 
 
 function aboutUs(){
