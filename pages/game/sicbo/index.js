@@ -313,13 +313,13 @@ export default function Sicbo() {
                 <div className="d-flex justify-content-center" style={{gap: "20px"}}>
                     {diceResult.map((die) => {
                         return (
-                            <Img
+                            <img
                                 src={`/images/game/SicboGame/${die}.png`}
                                 alt=""
                                 width="75rem"
                                 height="75rem"
                                 className={styles.sicboDice}
-                            ></Img>
+                            ></img>
                         )
                     })}                    
                 </div>
