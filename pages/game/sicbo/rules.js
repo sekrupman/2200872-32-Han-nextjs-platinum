@@ -7,12 +7,12 @@ export default function SicboRules() {
     return (
         <div className={styles.sicboRules}>
             <div className="d-flex justify-content-center">
-                <Img
+                <img
                     src="/images/game/SicboGame/dragon.png"
                     width="250rem"
                     height="70rem"
                     >
-                </Img>
+                </img>
             </div>
             <br></br>
             <span> 
