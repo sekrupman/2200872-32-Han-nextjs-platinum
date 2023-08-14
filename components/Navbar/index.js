@@ -11,8 +11,6 @@ import {
   UncontrolledTooltip
 } from 'reactstrap';
 
-import Image from 'next/image';
-
 // import component 
 import LogoutModal from '../LandingPage/logoutModal';
 
